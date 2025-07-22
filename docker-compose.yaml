@@ -1,22 +1,20 @@
-version: "3.8"
-
 services:
-  postgres:
+  postgres-joguefacil:
     image: postgres:16
-    container_name: postgres
+    container_name: playeasy-postgres
     restart: always
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: joguefacil
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_DB: JogueFacilBanco
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  mongodb:
+  mongodb-joguefacil:
     image: mongo:7.0
-    container_name: mongo
+    container_name: playeasy-mongo
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -26,7 +24,36 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: playeasy-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      # General Kafka Configuration
+      KAFKA_CFG_PROCESS_ROLES: broker,controller
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093 # Added CONTROLLER listener
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      ALLOW_PLAINTEXT_LISTENER: yes
+
+      # KRaft specific configuration for Bitnami image
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_KRAFT_CLUSTER_ID: "AbcDEF123GhIJKlMnOpQR" # Use the same fixed ID or generate a random one if you recreate the volume
+
+      # ********** ADD THIS LINE **********
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      # ***********************************
+      
+    volumes:
+      - kafka-data:/bitnami
+    healthcheck:
+      test: ["CMD", "kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres-data:
   mongo-data:
+  kafka-data:
