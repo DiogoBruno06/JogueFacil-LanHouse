@@ -18,6 +18,7 @@ O objetivo principal é praticar conceitos de **containerização (Docker)** e *
 ---
 
 ## 📦 Estrutura no Kubernetes
+- **Deployment do MongoDB** com volume persistente.
 - **Deployment do PostgreSQL** com volume persistente.
 - **Deployment do Kafka** com service interno.
 - **Deployment da aplicação LanHouse** conectando nos serviços acima.
