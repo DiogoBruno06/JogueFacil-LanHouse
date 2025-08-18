@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kafka-secret
+type: Opaque
+data:
+  KAFKA_KRAFT_CLUSTER_ID: QWJjREVGMTIzR2hJSktMbU5PcFFS
