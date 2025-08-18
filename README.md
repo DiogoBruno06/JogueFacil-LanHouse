@@ -22,7 +22,6 @@ O objetivo principal é praticar conceitos de **containerização (Docker)** e *
 - **Deployment do PostgreSQL** com volume persistente.
 - **Deployment do Kafka** com service interno.
 - **Deployment da aplicação LanHouse** conectando nos serviços acima.
-- Uso de **ConfigMaps** para variáveis não sensíveis (ex.: cor da aplicação, configurações).
 - Uso de **Secrets** para armazenar dados sensíveis (usuário e senha do banco, etc).
 
 ⚠️ **Atenção**:  
