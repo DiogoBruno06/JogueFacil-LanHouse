@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-cadastro
+spec:
+  selector:
+    app: cadastro-deployment
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30060

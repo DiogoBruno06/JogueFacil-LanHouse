@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-lanhouse
+spec:
+  selector:
+    app: lanhouse-deployment
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8081
+    nodePort: 30080
